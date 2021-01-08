@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>form</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <!-- font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<div class="container">
+    <section class="content-section">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 ">
+
+                <div class="row justify-content-right user-control">
+                    <div class="col-lg-4">
+                        <h1>Add post</h1>
+                    </div>
+                    <div class="col-lg-8" style="text-align: left;">
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <form id="form" action="formApi.php" method="post">
+                        <input name="userName" id="user-name" type="text" class="form-control" placeholder="user's name" value=""><br>
+                        <input name="userEmail" id="user-email" type="email" class="form-control" placeholder="user's email" value=""><br>
+                        <input name="postTitle" id="post-title" type="text" class="form-control" placeholder="post's title" value=""><br>
+                        <textarea name="postBody" id="post-body" class="form-control" placeholder="post's body"></textarea><br>
+                        <input type="submit" name="sendData" class="btn btn-primary" value="Add"">
+                        </form>
+                        <p id="response"></p>
+                    </div>
+                </div>
+
+                <script>
+
+                </script>
+
+
+            </div>
+        </div>
+    </section>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function () {
+    var frm = $('#form');
+    frm.submit(function (ev) {
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            dataType: "json",
+            success: function (data) {
+                if(data.status == "OK"){
+                    $("#response").text("added succefully");
+                    $('input[type=text],input[type=email]').val("");
+                    $('textarea').val("");
+                }else{
+                    $("#response").text(data.error);
+                }
+            }
+        });
+        ev.preventDefault();
+    });
+});
+</script>
+</body>
+</html>
+
+
